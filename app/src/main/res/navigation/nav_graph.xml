@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pastExpenseFragment">
+    <fragment
+        android:id="@+id/pastExpenseFragment"
+        android:name="ru.startandroid.mybudget.pastexpense.PastExpenseFragment"
+        android:label="fragment_past_expense"
+        tools:layout="@layout/fragment_past_expense" >
+        <action
+            android:id="@+id/action_pastExpenseFragment_to_insertFragment"
+            app:destination="@id/insertFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/futureExpIncFragment"
+        android:name="ru.startandroid.mybudget.futureexpenseincome.FutureExpIncFragment"
+        android:label="fragment_future_exp_inc"
+        tools:layout="@layout/fragment_future_exp_inc" >
+        <action
+            android:id="@+id/action_futureExpIncFragment_to_insertFragment"
+            app:destination="@id/insertFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/insertFragment"
+        android:name="ru.startandroid.mybudget.InsertFragment"
+        android:label="fragment_insert"
+        tools:layout="@layout/fragment_insert" />
+</navigation>

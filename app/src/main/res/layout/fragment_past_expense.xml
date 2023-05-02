@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".pastexpense.PastExpenseFragment">
+
+    <Button
+        android:id="@+id/btnNextFutExpInc"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="Future Expense/Income"
+        app:icon="@drawable/ic_next"
+        app:iconGravity="end" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPastExpense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CDDC39"
+        android:padding="5dp"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
