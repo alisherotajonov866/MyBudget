@@ -23,7 +23,6 @@
         android:id="@+id/rvPastExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#CDDC39"
         android:padding="5dp"
         android:scrollbars="vertical" />
 

@@ -6,7 +6,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import ru.startandroid.mybudget.ItemsViewModel
 import ru.startandroid.mybudget.R
+import ru.startandroid.mybudget.adapter.CustomAdapter
 import ru.startandroid.mybudget.databinding.FragmentPastExpenseBinding
 
 
@@ -19,6 +22,7 @@ class PastExpenseFragment : Fragment() {
 
     private var _binding: FragmentPastExpenseBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,7 +30,6 @@ class PastExpenseFragment : Fragment() {
     ): View? {
 
         _binding = FragmentPastExpenseBinding.inflate(layoutInflater, container, false)
-
         val navOptions = NavOptions.Builder()
             .setEnterAnim(R.anim.enter)
             .setExitAnim(R.anim.exit)
@@ -34,9 +37,19 @@ class PastExpenseFragment : Fragment() {
             .setPopExitAnim(R.anim.pop_exit)
             .build()
 
+        val data = ArrayList<ItemsViewModel>()
+        binding.rvPastExpense.layoutManager = LinearLayoutManager(context)
+
+        for (i in 1..20) {
+            data.add(ItemsViewModel("Non", "20,000 $i"))
+        }
+        val adapter = CustomAdapter(data)
+        binding.rvPastExpense.adapter = adapter
+
         binding.btnNextFutExpInc.setOnClickListener() {
             findNavController().navigate(R.id.futureExpIncFragment, null, navOptions)
         }
+
         return binding.root
     }
 
@@ -44,9 +57,4 @@ class PastExpenseFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
-    companion object {
-
-    }
-
 }
