@@ -1,17 +1,16 @@
 package ru.startandroid.mybudget.pastexpense
 
-import android.animation.AnimatorSet
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.startandroid.mybudget.ItemsViewModel
+import ru.startandroid.mybudget.Product
 import ru.startandroid.mybudget.R
-import ru.startandroid.mybudget.adapter.CustomAdapter
+import ru.startandroid.mybudget.adapter.ProductAdapter
 import ru.startandroid.mybudget.databinding.FragmentPastExpenseBinding
-
+import ru.startandroid.mybudget.myDB.DBHelper
 
 class PastExpenseFragment : Fragment() {
 
@@ -23,11 +22,20 @@ class PastExpenseFragment : Fragment() {
     private var _binding: FragmentPastExpenseBinding? = null
     private val binding get() = _binding!!
 
+    private val productAdapter by lazy {
+        ProductAdapter(listProduct)
+    }
+
+    private lateinit var listProduct: ArrayList<Product>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val db = DBHelper(requireContext(),null)
+        listProduct = ArrayList(db.listProduct())
 
         _binding = FragmentPastExpenseBinding.inflate(layoutInflater, container, false)
         val navOptions = NavOptions.Builder()
@@ -37,14 +45,8 @@ class PastExpenseFragment : Fragment() {
             .setPopExitAnim(R.anim.pop_exit)
             .build()
 
-        val data = ArrayList<ItemsViewModel>()
         binding.rvPastExpense.layoutManager = LinearLayoutManager(context)
-
-        for (i in 1..20) {
-            data.add(ItemsViewModel("Non", "20,000 $i"))
-        }
-        val adapter = CustomAdapter(data)
-        binding.rvPastExpense.adapter = adapter
+        binding.rvPastExpense.adapter = productAdapter
 
         binding.btnNextFutExpInc.setOnClickListener() {
             findNavController().navigate(R.id.futureExpIncFragment, null, navOptions)
