@@ -1,7 +1,9 @@
 package ru.startandroid.mybudget.pastexpense
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -22,11 +24,10 @@ class PastExpenseFragment : Fragment() {
     private var _binding: FragmentPastExpenseBinding? = null
     private val binding get() = _binding!!
 
+    lateinit var listProduct: ArrayList<Product>
     private val productAdapter by lazy {
         ProductAdapter(listProduct)
     }
-
-    private lateinit var listProduct: ArrayList<Product>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +54,16 @@ class PastExpenseFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val db = DBHelper(requireContext(),null)
+        listProduct = ArrayList(db.listProduct())
+        val productAdapter = ProductAdapter(listProduct)
+        binding.rvPastExpense.layoutManager = LinearLayoutManager(context)
+        binding.rvPastExpense.adapter = productAdapter
+
     }
 
     override fun onDestroy() {

@@ -1,11 +1,13 @@
 package ru.startandroid.mybudget
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import ru.startandroid.mybudget.adapter.ProductAdapter
 import ru.startandroid.mybudget.databinding.FragmentInsertBinding
 import ru.startandroid.mybudget.myDB.DBHelper
@@ -20,12 +22,7 @@ class InsertFragment : Fragment() {
     private var _binding: FragmentInsertBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listProduct: ArrayList<Product>
-
-    private val productAdapter by lazy {
-        ProductAdapter(listProduct)
-    }
-
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,15 +32,14 @@ class InsertFragment : Fragment() {
 
         val db = DBHelper(requireContext(),null)
 
-        binding.apply {
-            btnSave.setOnClickListener(){
+            binding.btnSave.setOnClickListener(){
                 val name = binding.etName.text.toString()
                 val price = binding.etPrice.text.toString().toDouble()
                 val product = Product(Name = name, Price = price)
                 db.addProduct(product)
                 Toast.makeText(context,"Add product",Toast.LENGTH_LONG).show()
+                findNavController().popBackStack()
             }
-        }
 
         return binding.root
     }
